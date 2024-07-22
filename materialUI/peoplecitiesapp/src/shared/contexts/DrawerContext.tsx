@@ -1,9 +1,17 @@
 import { useMediaQuery, useTheme } from "@mui/material";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
+interface IDrawerOptions {
+  path: string;
+  icon: string;
+  label: string;
+}
+
 interface IDrawerContext {
   isDrawerOpen: boolean;
+  drawerOptions: IDrawerOptions[];
   toggleDrawerState: () => void;
+  setDrawerOptions: (newDrawerOptions: IDrawerOptions[]) => void;
 };
 
 interface IDrawerProvide {
@@ -21,6 +29,7 @@ export const DrawerProvider: React.FC<IDrawerProvide> = ({ children }) => {
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [drawerOptions, setDrawerOptions] = useState<IDrawerOptions[]>([]);
   
   useEffect(() => {
     if (smDown) setIsDrawerOpen(false);
@@ -30,8 +39,12 @@ export const DrawerProvider: React.FC<IDrawerProvide> = ({ children }) => {
     setIsDrawerOpen(oldDrawerState => !oldDrawerState);
   }, [isDrawerOpen]);
 
+  const handleSetDrawerOptions = useCallback((newDrawerOptions: IDrawerOptions[]) => {
+    setDrawerOptions(newDrawerOptions);
+  }, []);
+
   return (
-    <DrawerContext.Provider value={{ isDrawerOpen, toggleDrawerState }}>
+    <DrawerContext.Provider value={{ isDrawerOpen, toggleDrawerState, drawerOptions, setDrawerOptions: handleSetDrawerOptions }}>
       {children}
     </DrawerContext.Provider>
   );
