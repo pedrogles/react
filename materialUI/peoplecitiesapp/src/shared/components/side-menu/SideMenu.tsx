@@ -1,14 +1,13 @@
 import React from "react";
-import { Avatar, Divider, List, useMediaQuery, useTheme } from "@mui/material";
-import { Box, Drawer } from "@mui/material";
+import { Avatar, Divider, List, useMediaQuery, useTheme, Box, Drawer } from "@mui/material";
 import { useDrawerContext } from "../../contexts";
 import { ListItemLink } from "./list-item-link/ListItemLink";
 
-interface IMenuLateral {
+interface ISideMenu {
   children: React.ReactNode;
-}
+};
 
-export const MenuLateral: React.FC<IMenuLateral> = ({ children }) => {
+export const SideMenu: React.FC<ISideMenu> = ({ children }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
   const { isDrawerOpen, toggleDrawerState, drawerOptions } = useDrawerContext();
